@@ -153,7 +153,7 @@ export class MDCTooltipFoundation extends MDCFoundation<MDCTooltipAdapter> {
     };
 
     this.windowScrollHandler = () => {
-      this.handleWindowChangeEvent();
+      this.handleWindowScrollEvent();
     };
 
     this.windowResizeHandler = () => {
@@ -347,6 +347,18 @@ export class MDCTooltipFoundation extends MDCFoundation<MDCTooltipAdapter> {
       // the screen reader upon the tooltip being opened), we want to allow
       // users to read the content of the tooltip (and not just the focusable
       // elements).
+      return;
+    }
+
+    this.hide();
+  }
+
+  private handleWindowScrollEvent() {
+    if (this.persistentTooltip) {
+      // Persistent tooltips remain visible on user scroll, call appropriate
+      // handler to ensure the tooltip remains pinned to the anchor on page
+      // scroll.
+      this.handleWindowChangeEvent();
       return;
     }
 
